@@ -22,7 +22,8 @@ def autoload_files_in_dir(path, namespace)
     eval("#{namespace}.autoload('#{sub_const_name}', '#{file}')")
   end
   # Recurse on subdirectories
-  Dir.glob("#{path}/*/").each do |dir|
+  Dir.glob("#{path}/*").each do |dir|
+    next if not File.directory?(dir)
     sub_namespace = camelize( File.basename(dir) )
     autoload_files_in_dir(dir, "#{namespace}::#{sub_namespace}")
   end
